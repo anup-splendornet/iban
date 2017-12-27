@@ -1,0 +1,8 @@
+__pycache__/
+nbproject/
+migrations/
+.vscode/
+
+## ignore all pycache files
+*.pyc
+*.pgsql

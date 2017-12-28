@@ -25,7 +25,7 @@
 
 - Daily we need only to fire command like `workon iban` to enter specific python version to execute code.
 
-- Ensure Django version by typing python `-m django --version`
+- Ensure Django version by typing `python -m django --version`
 
 - django-admin startproject ibanapp Ref: [https://docs.djangoproject.com/en/1.11/intro/tutorial01/](https://docs.djangoproject.com/en/1.11/intro/tutorial01/)
 

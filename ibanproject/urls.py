@@ -20,7 +20,10 @@ from oauth.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', AuthView.login, name='login'),
+    url(r'^logout/$', AuthView.logout, name='logout'),
+    url(r'^authlogin/$', AuthView.google_login, name='authlogin'),
     url(r'^$', AuthView.login, name='login'),
+    url(r'^auth/complete/google-oauth2/$', AuthView.site_authentication, name='googleauthenticate'),
     url(r'^dashboard/$', AuthView.dashboard, name='dashboard'),
 ]
 

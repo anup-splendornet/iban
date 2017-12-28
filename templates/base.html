@@ -31,7 +31,7 @@
                         <li class="navbar-text">Welcome, {{user.username}}</li>
                         <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
                     {% else %}
-                        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li><a href="{% url 'authlogin' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -57,11 +57,11 @@
             </div>
         </div>
     </div>
-    <footer class="container-fluid text-center">
+    <!--<footer class="container-fluid text-center">
         <div class="pull-right hidden-xs">
         </div>
         <strong> IBAN Management </strong>
-    </footer>
+    </footer>-->
     {% block bootstrap_admin_js %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>

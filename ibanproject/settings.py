@@ -128,6 +128,7 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/dashboard'
 LOGIN_FAILED_URL = '/'
+SUPER_ADMIN_URL = '/admin' #@TODO:: Will change url name later.
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
@@ -136,3 +137,13 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+TOKEN_REQUEST_URI = "https://accounts.google.com/o/oauth2/v2/auth"
+ACCESS_TOKEN_URI = 'https://www.googleapis.com/oauth2/v4/token'
+GOOGLE_PROFILE = "https://www.googleapis.com/oauth2/v3/userinfo?access_token="
+GOOGLE_SCOPE = "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
+GOOGLE_RESPONSE_TYPE = "code"
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='995207160357-91jqdq8k27o4qlg3mj57il2nq6f8pv0l.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '7IPTfRaox00ViYFupM4I--l7'
+REDIRECT_URI = "http://127.0.0.1:8000/auth/complete/google-oauth2/"

@@ -1,0 +1,19 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block content %}
+<div class="col col-sm-12 text-center">
+    <div class="col col-sm-12 text-center">
+        <marquee>
+            <h1 style="color:blue">Welcome To Users Bank </h1>
+        </marquee>
+        <div class="col col-sm-4"></div>
+        <div class="col col-sm-4">
+            <div style=" background-color: lightgrey; width: 415px; border: 5px solid green; padding: 25px;">
+                <a href="dashboard/"><img src="{% static 'images/googleSign.png' %}" alt="Login" width="300" height="67"/></a>
+            </div>
+        </div>
+        <div class="col col-sm-4"></div>
+    </div>
+    
+</div>
+{% endblock %}

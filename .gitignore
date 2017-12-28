@@ -1,6 +1,7 @@
 __pycache__/
 nbproject/
 migrations/
+ibanenv/
 .vscode/
 
 ## ignore all pycache files

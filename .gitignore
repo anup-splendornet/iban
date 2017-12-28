@@ -2,6 +2,7 @@ __pycache__/
 nbproject/
 migrations/
 .vscode/
+/static
 
 ## ignore all pycache files
 *.pyc

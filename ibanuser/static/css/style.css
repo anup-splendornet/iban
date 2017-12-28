@@ -1,0 +1,29 @@
+/* body */
+body{
+    font-family: 'Roboto Slab', serif;
+}
+
+/* navbar */
+.navbar-inverse .navbar-nav>li>a{
+    color: #fff;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #fff;
+}
+
+.dropdown-menu{
+    background-color: #222;
+    border-color: #080808;
+}
+
+.dropdown-menu>li>a, .dropdown-menu>li>a:hover {
+    background-color: #222;
+    color: #fff;
+}
+
+@media (min-width: 768px){
+    .navbar {
+        border-radius: 0px;
+    }
+}

@@ -16,8 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
+from ibanuser import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^login/$', auth_views.login, name='login'),  
+    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^logout/$', auth_views.logout, {'next_page': '/login'}, name='logout'),
+    url(r'^authlogin/$', views.SocialAuthentication.google_login, name='authlogin'),
+    url(r'^auth/complete/google-oauth2/$', views.SocialAuthentication.site_authentication, name='googleauthenticate'),
+    url(r'^dashboard/', login_required(views.Dashboard.as_view(template_name='ibanuser/dashboard.html')), name='home'),
 ]

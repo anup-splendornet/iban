@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block nav %} {% endblock %}
+{% block content %}
+<div class="col-md-12">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+		<div class="col-md-12" id="login-wraper">
+			<h3><b>IBAN<b></h3>
+            <h4><b>Please Fill Login Details</b></h4>		  		  		
+			<form method="post" id="login-form">
+		    {% csrf_token %}	   
+		        <input type="text" name="username" autofocus="true" maxlength="254" required="true" id="id_username" class="form-control field" placeholder="Enter Username">                    
+		    		    				    
+		        <input type="password" name="password" required="true" id="id_password" class="form-control field" placeholder="Enter Password">                				    		    
+			    <input type="hidden" name="next" value="{{ next }}" />			    
+			        <button type="submit" name="login" class="btn btn-info">Log in</button>			    
+			</form>
+  		</div>		
+	</div>
+	<div class="col-md-3"></div>
+</div>
+
+{% endblock %}

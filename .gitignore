@@ -2,6 +2,8 @@ __pycache__/
 nbproject/
 migrations/
 .vscode/
+/static
+db.sqlite3
 
 ## ignore all pycache files
 *.pyc

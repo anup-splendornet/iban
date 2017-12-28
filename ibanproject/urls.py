@@ -15,7 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from oauth.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^login/$', AuthView.login, name='login'),
+    url(r'^$', AuthView.login, name='login'),
+    url(r'^dashboard/$', AuthView.dashboard, name='dashboard'),
 ]
+
+#Errors pages has been hanlded from here.
+handler404 = 'oauth.views.not_found'
+handler500 = 'oauth.views.server_error'
+handler403 = 'oauth.views.permission_denied'
+handler400 = 'oauth.views.bad_request'

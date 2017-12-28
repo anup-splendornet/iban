@@ -1,0 +1,51 @@
+.container-fluid{    
+    background-color: rgba(0,0,0,0.6);
+}
+
+body.login{
+    color: #fff;
+}
+
+#header{
+    background: none !important; 
+}
+
+body{
+    font-family: 'Roboto Slab', serif;
+}
+
+#id_username, #id_password{
+    background-color: transparent;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid #fff;
+}
+
+input::placeholder{
+    color: #fff !important;
+}
+
+input{
+    color: #fff !important;
+}
+
+.errornote{    
+    margin-top: 20%;
+    color: #fff;    
+}
+
+#id_username:focus, #id_password:focus{
+    border: 1px solid #fff;
+}
+
+#branding{
+    display: none;
+}
+
+h1,h3{
+    color: #fff;
+}
+
+.btn{
+    border-radius: 0px;
+}

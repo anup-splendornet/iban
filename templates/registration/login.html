@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block title %} Login {% endblock %}
+    
+{% block nav %} {% endblock %}
+
+{% block content %}
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-md-4 col-offset-md-1">
+                <br><br><br>
+                <h1>Welcome !</h1>
+                <h3>Today will be great.</h3>
+                <br><br>
+                <form method="post" id="login-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.username.errors }}
+                        <input type="text" name="username" autofocus="true" maxlength="254" required="true" id="id_username" class="form-control" placeholder="Enter Username">                    
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        {{ form.password.errors }}
+                        <input type="password" name="password" required="true" id="id_password" class="form-control" placeholder="Enter Password">                
+                    </div>
+                    <br>
+                    <input type="hidden" name="next" value="{{ next }}" />
+                    <div class="col-md-6">
+                        <button type="submit" name="login" class="btn btn-info">Log in</button>
+                        <a href="#" class="btn btn-success"><i class="fa fa-google-plus" aria-hidden="true"></i></a>                           
+                    </div>
+                </form>
+                
+                {% if form.errors and not form.non_field_errors %}
+                    <p class="errornote">
+                        {% if form.errors.items|length == 1 %} 
+                            Please correct the error. 
+                        {% else %} 
+                            Please correct the errors. 
+                        {% endif %}
+                    </p>
+                {% endif %}
+
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <p class="errornote">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                {% endif %}
+                                
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ block.super }}
+    <script src="{% static "/js/jquery.backstretch.min.js" %}"></script>
+    <script>
+        $(document).ready(function(){            
+            var win_height = $(window).height()+'px';    
+            $('.container-fluid').css('height', win_height);
+            $.backstretch("/static/images/background.jpg");
+        });
+    </script>        
+{% endblock %}
+

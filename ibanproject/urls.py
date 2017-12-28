@@ -17,9 +17,15 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views
 from ibanmanage.views import *
+from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.login, name='login'),
+    url(r'^login/$', views.login, kwargs={'redirect_authenticated_user': True}, name='login'),
+    url(r'^logout/$', views.logout,{'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
+    url(r'^authlogin/$', GoogleAuthentication.google_login, name='authlogin'),
+    url(r'^auth/complete/google-oauth2/$', GoogleAuthentication.site_authentication, name='googleauthenticate'),
+    url(r'^loginfailed/$', loginfailed, name='loginfailed'),
     url(r'^dashboard/$', BaseViews.dashboard,{},  name='dashboard'),
 ]

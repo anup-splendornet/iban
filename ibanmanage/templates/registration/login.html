@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="col col-sm-12 text-center">
-    <img src="{% static 'images/SignInGoogle.png' %}" alt="Login" width="300" height="67"/>
+<div class="col col-sm-12 text-center margintophundred">
+    <a href="/authlogin/"><img src="{% static 'images/SignInGoogle.png' %}" alt="Login" width="300" height="67"/></a>
 </div>
 {% endblock %}

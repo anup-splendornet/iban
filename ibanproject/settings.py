@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -77,7 +78,7 @@ WSGI_APPLICATION = 'ibanproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-		 'NAME': 'ibanapp',
+        'NAME': 'ibanapp',
     }
 }
 
@@ -119,7 +120,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR + '/static/'
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
+LOGOUT_REDIRECT_URL  = '/login/'
+LOGIN_FAILED_URL = '/loginfailed/'
+TOKEN_REQUEST_URI = "https://accounts.google.com/o/oauth2/v2/auth"
+ACCESS_TOKEN_URI = "https://www.googleapis.com/oauth2/v4/token"
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='699195672512-c90iunjrblbeifjmo8hn5geb84r7901a.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '7a9oOyKJX0MSQ6d2NGGTyLXv'
+REDIRECT_URI = "http://127.0.0.1:8000/auth/complete/google-oauth2/"
+ACCESS_TOKEN_URI = 'https://www.googleapis.com/oauth2/v4/token'
+GOOGLE_PROFILE = "https://www.googleapis.com/oauth2/v3/userinfo?access_token="
+GOOGLE_SCOPE = "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
+GOOGLE_RESPONSE_TYPE = "code"
+
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}

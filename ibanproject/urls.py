@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^authlogin/$', views.SocialAuthentication.google_login, name='authlogin'),
     url(r'^auth/complete/google-oauth2/$', views.SocialAuthentication.site_authentication, name='googleauthenticate'),
     url(r'^dashboard/', login_required(views.Dashboard.as_view(template_name='ibanuser/dashboard.html')), name='home'),
+    url(r'^adduser/$', login_required(views.CreateUser.as_view(template_name='ibanuser/ibaninfo.html')), name='adduser'),    
 ]

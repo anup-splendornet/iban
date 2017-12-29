@@ -1,1 +1,62 @@
 {% extends 'base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block style %}
+    {{ block.super }}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">   
+{% endblock %}
+
+{% block nav %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row userlist">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">IBAN Details</div>
+                    </div>
+                    <a href=" {% url 'adduser' %}" class="btn btn-success pull-right">Add</a>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="ibantable">
+                            <thead>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>IBAN Number</th>                                
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                            {% if userdetails %}
+                                {% for userdetail in userdetails %}
+                                    <tr>
+                                        <td>{{ userdetail.first_name }}</td>
+                                        <td>{{ userdetail.last_name }}</td>
+                                        <td>{{ userdetail.iban }}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-success btn-xs">Edit</a>
+                                            <a href="#" class="btn btn-danger btn-xs">Delete</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ block.super }}
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#ibantable').DataTable();
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} User {% endblock %}
+
+{% block style %}
+    {{ block.super }}
+{% endblock %}
+
+{% block nav %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        
+        <div class="container">
+            <div class="row userform">
+                <div class="col-md-6">
+                    {% if messages %}                        
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}                        
+                    {% else %}
+                        <form method="post" id="ibanuserform" novalidate>
+                            {% csrf_token %}                    
+                            {{ form|crispy }}
+                            <br>
+                            <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
+                            <input type=submit class="btn btn-success" value="Submit" />
+                            <br>
+                        </form>
+                    {% endif %}            
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
+
+{% block footer %}
+    {{ block.super }}
+    <script src="{% static 'js/jquery.validate.js' %}"></script>
+    <script src="{% static 'js/iban.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+{% endblock %}

@@ -1,11 +1,14 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django.views.generic import TemplateView
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User, Permission
+from django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.contrib.auth import login
 from ibanproject.GoogleOAuth.Google import GoogleOAuth
 from ibanproject import settings
 from django.contrib import messages
+from .models import IbanInfo
+from .forms import IbanInfoForm
 
 # Create your views here.
 class SocialAuthentication:
@@ -67,8 +70,42 @@ class SocialAuthentication:
         else:
             return redirect('login')
 
+class Dashboard(ListView):
+    # home page or dashboard
+    model = IbanInfo
+    context_object_name = 'userdetails'
+    # queryset for the home page or dashboard
+    def get_queryset(self):
+        # if the user is superuser
+        if self.request.user.is_authenticated():
+            return IbanInfo.objects.filter(owner=self.request.user)
+        else:
+            return None
 
-class Dashboard(TemplateView):
-    # get the view of home page
+
+class CreateUser(CreateView):
+    # iban user creation functions
+    model = IbanInfo
+    form_class = IbanInfoForm
+    success_url = reverse_lazy('home')
+
+    # get the form for saving the data
     def get(self, request, *args):
-        return render(request, self.template_name, {})
+        try:
+            ibanadmin = request.user.groups.values_list('name',flat=True)
+        except:
+            ibanadmin = None
+        # if the loggedin user doesn't have permission to be an admin then show error message      
+        if 'ibanadmin' not in ibanadmin:
+            messages.error(self.request, 'You are not authorized as an IBAN Admin.')
+        else:
+            permission_list = Permission.objects.values_list("codename",flat=True).filter(group__user=request.user)
+            if 'add_ibaninfo' not in permission_list:
+                messages.error(self.request, 'You are not authorized to add any information.')
+
+        return render(request, self.template_name, {'form': self.form_class})
+
+    # saving the form data for ibanusers
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super(CreateUser, self).form_valid(form)

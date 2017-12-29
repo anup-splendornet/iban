@@ -32,8 +32,7 @@ class IbanModelTestCase(TestCase):
 class IbanFormTestCase(TestCase):
     
     def setUp(self):
-        fixtures = 'group_admin.json'
-        call_command('loaddata', fixtures, verbosity=0)
+        pass
 
     def test_form_success(self):
         """
@@ -43,10 +42,6 @@ class IbanFormTestCase(TestCase):
             "first_name":"anup",
             "last_name":"yadav",
             "iban_number":"DE89 3704 0044 0532 0130 00",
-            "status":True,
-            "creator_id":1,
-            "created_at":"2017-12-29 12:33:52",
-            "updated_at":"2017-12-29 12:33:52"
         }
         form = IbanDetailsForm(data=form_data)
         self.assertTrue(form.is_valid())
@@ -60,10 +55,6 @@ class IbanFormTestCase(TestCase):
             "first_name":"anup",
             "last_name":"yadav",
             "iban_number":"123456789",
-            "status":True,
-            "creator_id":1,
-            "created_at":"2017-12-29 12:33:52",
-            "updated_at":"2017-12-29 12:33:52"
         }
         form = IbanDetailsForm(data=form_data)
         #for error in form.errors:print(error) This should raise exception to IBAN number.

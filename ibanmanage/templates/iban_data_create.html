@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <form action="" method="post" novalidate="novalidate" id="iban_create_form">
+        {% csrf_token %}
+        <input type="hidden" name="existingibanid" id="existingibanid" value="{{object.pk}}"  />
+        <div class="row">
+            <div class="col col-sm-12">
+                <div class="col col-sm-6">
+                    <label> {{form.first_name.label}}<span class="text-danger"> * </span></label>
+                    {{form.first_name}}
+                    <span class="text-danger">{{ form.first_name.errors.as_text|cut:"* " }}</span>
+                </div>
+                <div class="col col-sm-6">
+                    <label class="required"> {{form.last_name.label}}<span class="text-danger"> * </span></label>
+                    {{form.last_name}}
+                    <span class="error text-danger">{{ form.last_name.errors.as_text|cut:"* " }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-sm-12">
+                <div class="col col-sm-6">
+                    <label class="required"> {{form.iban.label}}<span class="text-danger"> * </span></label>
+                    {{form.iban}}
+                    <span class="error text-danger">{{ form.iban.errors.as_text|cut:"* " }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-sm-12">
+                <div class="col col-sm-6">&nbsp;</div>
+                <div class="col col-sm-6 text-right">
+                    <button type="submit" class="btn btn-success">SUBMIT</button>
+                    <button type="reset" class="btn btn-info margin-left-right">RESET</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-default">CANCEL</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,6 +1,68 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 {% block content %}
 <div class="container">
-
+    <div class="row">
+        <div class="col-sm-12 text-right">
+            <a href="/addibandata/" class="btn btn-info">ADD USER</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading"><strong>User Details</strong></div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th> First Name </th>
+                                <th> Last Name </th>
+                                <th> IBAN </th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% if object_list %}
+                        {% for ibandetails in object_list %}
+                            <tr>
+                                <td> {{ forloop.counter }} </td>
+                                <td> {{ ibandetails.first_name }} </td>
+                                <td> {{ ibandetails.last_name }} </td>
+                                <td> {{ ibandetails.iban }} </td>
+                                <td width="20%">
+                                    <a href="" class="btn btn-xs btn-info">EDIT</a>
+                                    <a href="" data-remote="false" data-toggle="modal" data-target="#modalconfirmdelete" class="btn btn-xs btn-danger">DELETE</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" align="center">No Data</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                    {% if is_paginated %}
+                    <div class="pagination">
+                        <span class="page-links">
+                            {% if page_obj.has_previous %}
+                                <a href="/dashboard?page={{ page_obj.previous_page_number }}">Previous</a>
+                            {% endif %}
+                            <span class="page-current">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </span>
+                            {% if page_obj.has_next %}
+                                <a href="/dashboard?page={{ page_obj.next_page_number }}">Next</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock content %}

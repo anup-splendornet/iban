@@ -27,5 +27,11 @@ urlpatterns = [
     url(r'^authlogin/$', GoogleAuthentication.google_login, name='authlogin'),
     url(r'^auth/complete/google-oauth2/$', GoogleAuthentication.site_authentication, name='googleauthenticate'),
     url(r'^loginfailed/$', loginfailed, name='loginfailed'),
-    url(r'^dashboard/$', BaseViews.dashboard,{},  name='dashboard'),
+    url(r'^dashboard/$', Dashboard.as_view(),{},  name='dashboard'),
+    url(r'^addibandata/$', IbandataCreate.as_view(model=Ibandata, success_url='/dashboard/'), {},  name='addibandata'),
+    url(r'^ibanunique/$', ibanunique, name='ibanunique'),
 ]
+handler400 = 'ibanmanage.views.bad_request'
+handler403 = 'ibanmanage.views.permission_denied'
+handler404 = 'ibanmanage.views.not_found'
+handler500 = 'ibanmanage.views.server_error'

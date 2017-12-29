@@ -19,7 +19,10 @@ class IbandataCreateForm(forms.ModelForm):
         except Exception as msg:
             self.add_error('iban',msg)
         # avoid duplicate iabn
-        duplicate_iban = models.Ibandata.objects.filter(Q(iban__exact = cleaned_data.get('iban'))).count()
+        if self.instance.pk:
+            duplicate_iban = models.Ibandata.objects.filter(Q(iban__exact = cleaned_data.get('iban')) & ~Q(id = self.instance.pk) ).count()
+        else:
+            duplicate_iban = models.Ibandata.objects.filter(Q(iban__exact = cleaned_data.get('iban'))).count()
         if duplicate_iban > 0:
                 self.add_error('iban',"%s already exist in database." % cleaned_data.get('iban'))
         return self.cleaned_data
@@ -42,3 +45,5 @@ class IbandataCreateForm(forms.ModelForm):
                 'required':'Please Enter IBAN.'
             }
         }
+    class Media:
+        js = (('js/ibancreate.js','js/iban.js'))

@@ -4,3 +4,13 @@ body{
 .margintophundred{
     margin-top: 100px;
 }
+span.error{
+    float: left;
+}
+.error{
+    color: #a94442;
+}
+.margin-left-right{
+    margin-left: 10px;
+    margin-right: 10px;
+}

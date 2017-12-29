@@ -9,6 +9,9 @@ from django.db import transaction
 from .common import *
 from ibanmanage.models import *
 from django.contrib.auth import login
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView
+from ibanmanage import forms
 
 # Create your views here.
 class GoogleAuthentication():
@@ -81,7 +84,63 @@ class GoogleAuthentication():
 def loginfailed(request):
 	return render(request, 'loginfailed.html')
 
-class BaseViews():
-    @login_required(login_url=settings.LOGIN_URL)
-    def dashboard(request):
-        return render(request,"dashboard.html")
+class Dashboard(ListView):
+    """Dashboard for system
+
+    User will be redirected to this class after login and it will display listing of IBAN users
+    """
+    model = Ibandata
+    template_name = 'dashboard.html'
+    paginate_by = 5
+
+    @method_decorator(login_required(login_url=settings.LOGIN_URL))
+    def dispatch(self, *args, **kwargs):
+        return super(Dashboard, self).dispatch(*args, **kwargs)
+
+    #redirect to login page
+    def get_queryset(self):
+        queryset = Ibandata.objects.filter(created_by = self.request.user)
+        return queryset
+
+class IbandataCreate(CreateView):
+    """Create IBAN Users
+
+    Create view for IBAN users
+    """
+    model = Ibandata
+    template_name = 'iban_data_create.html'
+    form_class = forms.IbandataCreateForm
+    @method_decorator(login_required(login_url=settings.LOGIN_URL))
+    @method_decorator(permission_required("add_ibandata"))
+    def dispatch(self, *args, **kwargs):
+        return super(IbandataCreate, self).dispatch(*args, **kwargs)
+
+    def form_invalid(self, form):
+        return super(IbandataCreate, self).form_invalid(form)
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        messages.success(self.request, 'Data Added Successfuly.')
+        return super(IbandataCreate, self).form_valid(form)
+
+@login_required(login_url=settings.LOGIN_URL)
+def ibanunique(request):
+    iban = Ibandata.objects.values('id').filter(iban__iexact=request.POST.get('iban'))
+    if(iban and 'existingibanid' in request.POST and request.POST.get('existingibanid') and request.POST.get('existingibanid') != ""):
+        iban = iban.exclude(pk=int(request.POST.get('existingibanid')))
+    if (not iban):
+        return HttpResponse('true')
+    else:
+        return HttpResponse('false')
+
+def server_error(request):
+    return render(request, 'error_pages/500.html')
+ 
+def not_found(request):
+    return render(request, 'error_pages/404.html')
+ 
+def permission_denied(request):
+    return render(request, 'error_pages/403.html')
+ 
+def bad_request(request):
+    return render(request, 'error_pages/400.html')

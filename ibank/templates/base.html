@@ -15,6 +15,11 @@
                     <div class="navbar-header">
                         <a class="navbar-brand" href="">USERS BANK</a>
                     </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if user.is_authenticated %}
+                            <li><a href="/logout/">Welcome, <strong> {{ user.username }} </strong> Logout </a></li>
+                        {% endif %}
+                    </ul>
                 </div>
             </nav>
             <div class="container-fluid">

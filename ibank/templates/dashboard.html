@@ -2,9 +2,5 @@
 {% block content %}
 <div class="container">
     Dashboard
-    {% if user.is_authenticated %}
-       <h1>Hello {{ user.username }}</h1> 
-       <a href="/logout/">Hello, </a>
-    {% endif %}
 </div>
 {% endblock content %}

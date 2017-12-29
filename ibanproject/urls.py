@@ -19,7 +19,9 @@ from django.contrib import admin
 from ibanuserapp import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),    
     url(r'^login/$', auth_views.login, name='login'),
-
+    url(r'^authlogin/$', views.GoogleAuth.login, name='usergoogleauth'),
+    url(r'^auth/complete/google-oauth2/$', views.GoogleAuth.auth, name='usergoogleauthresponse'), 
+    url(r'^dashboard/', views.Home.as_view(), name='home'),
 ]

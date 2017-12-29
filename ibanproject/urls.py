@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from oauth.views import *
+from ibanmanagment.views import DashBoardView, CreateIban, CommonCheck
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,7 +25,9 @@ urlpatterns = [
     url(r'^authlogin/$', AuthView.google_login, name='authlogin'),
     url(r'^$', AuthView.login, name='login'),
     url(r'^auth/complete/google-oauth2/$', AuthView.site_authentication, name='googleauthenticate'),
-    url(r'^dashboard/$', AuthView.dashboard, name='dashboard'),
+    url(r'^dashboard/$', DashBoardView.as_view(), name='dashboard'),
+    url(r'^createiban/$', CreateIban.as_view(), {}, name='createiban'),
+    url(r'^unique/iban/$', CommonCheck.checkuniqueiban, {}, name='uniqueiban'),
 ]
 
 #Errors pages has been hanlded from here.

@@ -7,5 +7,5 @@ from .forms import *
 class IbanDetailsAdmin(admin.ModelAdmin):
     form = IbanDetailsForm
     fields = (('first_name','last_name'),('iban_number','status'),('creator',))
-    list_display = ('first_name','last_name','iban_number','status')
+    list_display = ('first_name','last_name','iban_number','creator','status')
     search_fields = ('first_name','last_name','iban_number','status')

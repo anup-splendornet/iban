@@ -42,3 +42,5 @@ class IbanDetailsForm(forms.ModelForm):
                 'required':'Please Enter Iban Number.'
             }
         }
+    class Media:
+        js = (('js/iban.js','js/iban_details.js',))

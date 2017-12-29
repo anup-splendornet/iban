@@ -44,9 +44,7 @@ class OauthTestCase(TestCase):
         self.check_account_exist_or_create_test_new_user()
         self.check_account_exist_or_create_test_is_active()
         self.check_account_exist_or_create_test_is_superadmin()
-        self.check_account_exist_or_create_test_is_admin()
-        self.dashboard_negative_test()
-        self.dashboard_positive_test()
+        self.check_account_exist_or_create_test_is_admin()        
 
     def check_account_exist_or_create_test(self):
         user = AuthView.check_account_exist_or_create(self.request,self.google_profile)
@@ -78,16 +76,3 @@ class OauthTestCase(TestCase):
         self.google_profile['email'] = "noadmin@gmail.com"
         user = AuthView.check_account_exist_or_create(self.request,self.google_profile)
         self.assertFalse(user)
-
-    #Dashboard should redirect if anonymous user tries to login to system.
-    def dashboard_negative_test(self):
-        response = self.client.get(reverse('dashboard'))
-        self.assertRedirects(response, '/?next=/dashboard/')
-        self.assertEqual(response.status_code, 302)
-
-    #Dashboard should work for logged in user.
-    def dashboard_positive_test(self):
-        User.objects.create_user(username='flyuser',email='flyuser@gmail.com',password='flyuser')
-        login = self.client.login(username='flyuser', password='flyuser')
-        response = self.client.get(reverse('dashboard'))
-        self.assertEqual(response.status_code, 200)

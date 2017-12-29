@@ -133,10 +133,6 @@ class AuthView():
             messages.add_message(request, messages.ERROR, error_messages['account_authentication_failed'])
             return HttpResponseRedirect('{loginfailed}'.format(loginfailed = settings.LOGIN_FAILED_URL))
 
-    @login_required(login_url=settings.LOGIN_URL) #Login check
-    def dashboard(request):
-        return render(request, 'dashboard.html')
-
 def server_error(request):
     return render(request, 'errors/500.html')
 

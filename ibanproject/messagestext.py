@@ -4,6 +4,9 @@ info_messages = {
 
 success_messages = {
     'account_created':"Account created successfully, It will be activated shortly.",
+    'iban_created':'IBAN created successfully.',
+    'iban_updated':'IBAN updated successfully.',
+    'iban_deleted':'IBAN deleted successfully.',
 }
 
 warning_messages = {

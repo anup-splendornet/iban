@@ -39,3 +39,7 @@
 
 - Every time you add new packages / module please fire this command and commit `pip3 freeze > requirements.txt` the file.
 
+- To autoload permissions and create group through command line instead of creating from superuser, please fire below command. 
+
+- `python manage.py loaddata oauth/fixtures/permission_group.json` 
+

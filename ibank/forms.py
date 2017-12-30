@@ -1,5 +1,6 @@
 from django import forms
 from .models import BankUser
+from schwifty import IBAN
 
 class ClientUserDetailForm(forms.ModelForm):
     first_name=forms.CharField(label="First Name")
@@ -20,3 +21,7 @@ class ClientUserDetailForm(forms.ModelForm):
         bank_no = cleaned_data.get('bank_no')
         if not first_name and not last_name and not bank_no:
             raise forms.ValidationError('All Fields Are Required')
+        try:
+            ibanvalue = IBAN(cleaned_data.get('bank_no'))
+        except Exception as msg:
+            self.add_error('bank_no', msg)

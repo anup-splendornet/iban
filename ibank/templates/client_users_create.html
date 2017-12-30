@@ -14,7 +14,7 @@
                                     {% for field in form.visible_fields %}
                                     <div class="row">
                                         <div class="col col-sm-4">
-                                            {{ field.label_tag }}
+                                            {{ field.label_tag }}*
                                         </div>
                                         <div class="col col-sm-4">
                                             {{ field }}
@@ -37,4 +37,18 @@
                 
             </div>
 </div>
+<script>
+        $( document ).ready(function() {
+            $('#id_first_name,#id_last_name').keydown(function (e) {
+                if (e.shiftKey || e.ctrlKey || e.altKey) {
+                    e.preventDefault();
+                } else {
+                    var key = e.keyCode;
+                    if (!((key == 8) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
+                        e.preventDefault();
+                    }
+                }
+            });
+        });
+    </script>
 {% endblock content %}

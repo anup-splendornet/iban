@@ -50,7 +50,7 @@ def permission_required(requested_permission):
             if requested_permission in permissions:
                 return view_method(request, *args, **kwargs)
             else:
-                messages.error(request, 'Insufficient Prmissions.')
+                messages.error(request, 'Insufficient Permissions.')
                 return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
         return _arguments_wrapper
     return _method_wrapper

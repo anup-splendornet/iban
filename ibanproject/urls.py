@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^loginfailed/$', loginfailed, name='loginfailed'),
     url(r'^dashboard/$', Dashboard.as_view(),{},  name='dashboard'),
     url(r'^addibandata/$', IbandataCreate.as_view(model=Ibandata, success_url='/dashboard/'), {},  name='addibandata'),
+    url(r'^editibandata/(?P<pk>\d+)/$', IbandataEdit.as_view(model=Ibandata, success_url='/dashboard/'), {},  name='editibandata'),
     url(r'^ibanunique/$', ibanunique, name='ibanunique'),
 ]
 handler400 = 'ibanmanage.views.bad_request'

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from ibanproject import settings
@@ -10,8 +10,10 @@ from .common import *
 from ibanmanage.models import *
 from django.contrib.auth import login
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from ibanmanage import forms
+from django.urls import reverse_lazy
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 class GoogleAuthentication():
@@ -122,6 +124,32 @@ class IbandataCreate(CreateView):
         form.instance.created_by = self.request.user
         messages.success(self.request, 'Data Added Successfuly.')
         return super(IbandataCreate, self).form_valid(form)
+
+class IbandataEdit(UpdateView):
+    """Update IBAN Users
+
+    Update view for IBAN users
+    """
+    model = Ibandata
+    form_class = forms.IbandataCreateForm
+    template_name = 'iban_data_create.html'
+    success_url = reverse_lazy('dashboard')
+
+    @method_decorator(login_required(login_url=settings.LOGIN_URL))
+    @method_decorator(permission_required("change_ibandata"))
+    def dispatch(self, *args, **kwargs):
+        return super(IbandataEdit, self).dispatch(*args, **kwargs)
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Data Updated Successfuly.')
+        return super(IbandataEdit, self).form_valid(form)
+
+    def get_object(self, *args, **kwargs):
+        user = get_object_or_404(Ibandata, pk=self.kwargs['pk'])
+        if not user.created_by == self.request.user:
+            raise PermissionDenied()
+        return user
+
 
 @login_required(login_url=settings.LOGIN_URL)
 def ibanunique(request):

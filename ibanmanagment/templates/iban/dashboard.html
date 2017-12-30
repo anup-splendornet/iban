@@ -31,7 +31,7 @@
 							<span class="glyphicon glyphicon-pencil"></span>
 						</a>
 
-						<a href="#" class="btn btn-danger btn-xs">
+						<a href="/deleteiban/{{object.pk}}" data-remote="false" data-toggle="modal" data-target="#modalconfirm" class="btn btn-danger btn-xs">
 							<span class="glyphicon glyphicon-trash"></span>
 						</a></td>
 				</tr>
@@ -68,4 +68,32 @@
 		{% endif %}
 	</div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalconfirm" tabindex="-1" role="dialog" aria-labelledby="modalconfirmLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">  </h4>
+			</div>
+			<div class="modal-body"> {% csrf_token %}
+
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 {% endblock content %}
+{% block bootstrap_admin_js %}
+    {{block.super}}
+	<script>
+		$(document).ready(function(){
+			$("#modalconfirm").on("show.bs.modal", function(e) {
+				var link = $(e.relatedTarget);
+				$(this).find(".modal-body").load(link.attr("href"));
+			});
+		});
+	</script>
+{% endblock bootstrap_admin_js %}

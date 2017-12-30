@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from oauth.views import *
-from ibanmanagment.views import DashBoardView, CreateIban, UpdateIban, CommonCheck
+from ibanmanagment.views import DashBoardView, CreateIban, UpdateIban, DeleteIban, CommonCheck
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^createiban/$', CreateIban.as_view(), {}, name='createiban'),
     url(r'^unique/iban/$', CommonCheck.checkuniqueiban, {}, name='uniqueiban'),
     url(r'^updateiban/(?P<pk>\d+)/$', UpdateIban.as_view(), {}, name='updateiban'),
+    url(r'^deleteiban/(?P<pk>\d+)/$', DeleteIban.as_view(), {}, name='deleteiban'),
 ]
 
 #Errors pages has been hanlded from here.

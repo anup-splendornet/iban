@@ -78,6 +78,36 @@ class UpdateIban(UpdateView):
         messages.success(self.request, success_messages['iban_updated'])
         return super(UpdateIban, self).form_valid(form)
 
+class DeleteIban(DeleteView):
+    model = IbanDetails
+    success_url = reverse_lazy('dashboard')
+    template_name = 'iban/ibandetails_confirm_delete.html'
+
+    @method_decorator(login_required(login_url=settings.LOGIN_URL)) #Login check
+    @method_decorator(permission_required('ibanmanagment.delete_ibandetails',settings.LOGIN_URL,True)) #Permission check
+    def dispatch(self, request,*args, **kwargs):
+        return super(DeleteIban, self).dispatch(request,*args, **kwargs)
+
+    def get_object(self, *args, **kwargs):
+        """ Checking if iban is exist or not.
+                If not then return not found error.
+                If iban object's creator is not matching with logged in user then return False and riases exception.
+                else return iban object.
+            Returns:
+                Object - Returns IbanDetails object.
+        """
+        iban = get_object_or_404(IbanDetails, pk=self.kwargs['pk'])
+        if not iban.is_owner(self.request.user):
+            raise PermissionDenied
+        return iban
+
+    def post(self, *args, **kwargs):
+        """
+        As we have developed ajax bootstrap confirmation popup and it required to have post method in form.
+        """
+        messages.success(self.request, success_messages['iban_deleted']) #Messages gets displayed, If IBAN successfully gets deleted. 
+        return super(DeleteIban, self).post(*args, **kwargs)
+
 class CommonCheck:
     
     @login_required(login_url=settings.LOGIN_URL)

@@ -1,6 +1,7 @@
 certifi==2017.11.5
 chardet==3.0.4
 Django==1.11
+django-autofixture==0.12.1
 django-crispy-forms==1.7.0
 idna==2.6
 iso3166==0.8

@@ -82,6 +82,11 @@ class Dashboard(ListView):
         else:
             return None
 
+    def get_context_data(self, **kwargs):
+        context = super(Dashboard, self).get_context_data(**kwargs)
+        context['ibanusers'] = self.get_queryset()
+        return context
+
 
 class CreateUser(CreateView):
     # iban user creation functions
@@ -109,3 +114,28 @@ class CreateUser(CreateView):
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super(CreateUser, self).form_valid(form)
+
+
+
+class EditUser(UpdateView):
+    # update functionality
+    model = IbanInfo
+    form_class = IbanInfoForm
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, **kwargs):
+        context = super(EditUser, self).get_context_data(**kwargs)
+        context['update'] = True
+        return context
+
+    # get the ibanuser object for update or edit
+    def get_object(self, *args, **kwargs):
+        ibanuser = get_object_or_404(IbanInfo, pk=self.kwargs['pk'])
+
+        # if the user is not superuser and the loggedin user is not the owner of ibanuser then show error message
+        permission_list = Permission.objects.values_list("codename",flat=True).filter(group__user=self.request.user)        
+        if self.request.user != ibanuser.owner or 'change_ibaninfo' not in permission_list:                        
+            messages.error(self.request, 'You are not authorized to change this information.')
+            return None
+        else:
+            return ibanuser

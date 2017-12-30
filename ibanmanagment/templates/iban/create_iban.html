@@ -45,3 +45,7 @@
     </form>
 </div>
 {% endblock content %}
+{% block bootstrap_admin_js %}
+    {{block.super}}
+    {{form.media}}
+{% endblock bootstrap_admin_js %}

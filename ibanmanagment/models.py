@@ -14,6 +14,10 @@ class IbanDetails(models.Model):
     def __str__(self):
         return self.iban_number
 
+    #Checking ownership of record / row.
+    def is_owner(self,user):
+        return self.creator == user
+
     class Meta:
         #managed = False
         db_table = 'iban_details'

@@ -21,7 +21,7 @@
         <body>           
 			
 			{% block nav %}
-				<nav class="navbar navbar-inverse">
+				<nav class="navbar navbar-inverse navbar-dark bg-company-green">
 					<div class="container">
 						<div class="navbar-header">
 							
@@ -30,10 +30,10 @@
 						<div class="collapse navbar-collapse" id="nav-collapse-1">
 							<ul class="nav navbar-nav navbar-right">
 								<li><a href="#"> {{ request.user.username }}</a></li>
-								<li class="dropdown">
+								<li class="dropdown bg-company-grey">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></a>
 									<ul class="dropdown-menu">
-										<li><a href="#">Logout</a></li>									
+										<li><a href="{% url 'logout' %}">Logout</a></li>									
 									</ul>
 								</li>                        
 							</ul>
@@ -49,6 +49,8 @@
 			{% block footer %}
 				<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
 				<script src="{% static 'js/bootstrap.min.js' %}"></script>
+				<script src="{% static 'js/jquery.validate.js' %}"></script>
+				<script src="{% static 'js/script.js' %}"></script>
 			{% endblock %}
 
         </body>

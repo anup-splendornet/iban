@@ -1,1 +1,44 @@
-Wel-come
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item active">IBAN Users</li>    
+</ol>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <!-- Add Button for Create View -->
+                <a class="btn btn-success" href="{% url 'add' %}">Add User</a>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 table-responsive">
+            <table class="table table-bordered table-striped">
+                <div class="summary">Total <b>{{ ibanusers.count }}</b></div>
+                <thead>
+                    <th>SR #</th>
+                    <th style="text-align: center;">First Name</th>
+                    <th style="text-align: center;">Last Name</th>
+                    <th style="text-align: center;">IBAN</th>
+                    <th style="text-align: center;">Actions</th>                                                              
+                    
+                </thead>                
+                {% for ibanuser in ibanusers %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td style="text-align: center;">{{ ibanuser.first_name }}</td>
+                    <td style="text-align: center;">{{ ibanuser.last_name }}</td>
+                    <td style="text-align: center;">{{ ibanuser.iban_num }}</td>                    
+                    <td style="text-align: center;"><button class="btn btn-primary btn-xs" data-title="Edit"  data-target="#edit" >Edit</button> &nbsp;&nbsp;<button class="btn btn-danger btn-xs" data-title="Delete" data-target="#delete" >Delete</button></td>                                     
+                </tr>
+                {% endfor %}
+            </table>
+            </div>
+            <div class="col-md-2"></div>    
+        </div>
+    </div>
+    
+{% endblock %}

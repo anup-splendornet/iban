@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+    
+{% block content %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">IBAN Users</a></li>
+    <li class="breadcrumb-item active">Add User</li>    
+</ol>
+<div class="col-md-12">    
+        <form method="post" id="userForm">
+            {% csrf_token %}
+            <div class="col-md-12">
+                <div class="col-md-6">                    
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name" autofocus="true" maxlength="80" required="true" id="id_first_name" class="form-control" placeholder="Enter First Name">
+                    {{ ibanuser.first_name.errors }}            
+                </div>
+                <div class="col-md-6">                    
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" autofocus="true" maxlength="80" required="true" id="id_last_name" class="form-control" placeholder="Enter Last Name">
+                    {{ ibanuser.last_name.errors }}            
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6">                    
+                    <label for="iban">IBAN</label>
+                    <input type="text" name="iban_num" autofocus="true" maxlength="100" required="true" id="id_iban" class="form-control" placeholder="Enter IBAN">
+                    {{ ibanuser.iban_num.errors }}                                
+                </div>
+            </div>    
+            <div class="form-group pull-right">
+                <input class="btn btn-success" type="submit" value="Submit" />
+            </div>
+        </form>
+        
+
+        
+        {% if messages %} 
+            {% for message in messages %} 
+                <strong>{{ message }}</strong>                
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% endblock %}

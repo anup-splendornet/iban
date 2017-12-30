@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.views.generic import View
 from django.contrib import messages
-
+from .models import IbanUserInfo
+from .forms import IbanUserInfoForm
 
 # Create your views here.
 class GoogleAuth:	
@@ -69,5 +70,23 @@ class GoogleAuth:
 
 class Home(View):
     def get(self, request, *args):
-        return render(request, 'userapp/home.html', {})
+        try:
+            ibanusers = IbanUserInfo.objects.filter(owner=request.user)
+        except:
+            ibanusers = None
 
+        return render(request, 'userapp/home.html', {'ibanusers': ibanusers})
+
+class Create(View):
+    def get(self,request):
+        ibanuser=IbanUserInfoForm()
+        return render(request, 'userapp/form.html', {'ibanuser': ibanuser})
+
+    def post(self, request):
+        ibanuser = IbanUserInfoForm(request.POST)        
+        if ibanuser.is_valid():
+            instance = ibanuser.save(commit=False)
+            instance.owner = request.user
+            instance.save()
+            messages.success(request, 'IBAN User Created Successfully.')
+        return render(request, 'userapp/form.html', {'ibanuser': ibanuser})

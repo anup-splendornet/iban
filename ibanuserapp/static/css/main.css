@@ -37,3 +37,16 @@
     font-weight: normal;
     color: #ff0000;
 }
+
+.error{
+    font-weight: normal;
+    color: #ff0000;
+}
+
+.bg-company-green {
+    background-color: lightgreen;
+}
+
+.bg-company-grey {
+    background-color: lightgray;
+}

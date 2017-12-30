@@ -6,7 +6,7 @@
 
 - Docker installation on windows https://docs.docker.com/toolbox/toolbox_install_windows/#step-3-verify-your-installation 
 
-- After installation of docker please ensure docker service is running. Once it is confirmed, import image into it docker load < iban.tar
+- After installation of docker please ensure docker service is running. Once it is confirmed, import image into it `docker load < iban.tar`
 
 - To list all available images Run command : `docker images`
     - It will list all the available images of the system. Our imported image details are
@@ -46,31 +46,30 @@
 
 - `python manage.py runserver 0.0.0.0:8004`
 
-- Now exit container but make it running.
-
-`ctrl p + q` (three keys ctrl p and q)
+- Now exit container but make it running. `ctrl p + q` (three keys ctrl p and q)
 
 - Now open browser and run 
 
 http://localhost:8000 (dev1)
-superuser credentials are : 
+superuser credentials are : anupy27 / Splendornet@123
 
 http://localhost:8001 (dev2)
-superuser credentials are : 
+superuser credentials are : anupy27 / Splendornet@123
 
 http://localhost:8002 (dev3)
-superuser credentials are : 
+superuser credentials are : anupy27 / Splendornet@123
 
 http://localhost:8003 (dev4)
-superuser credentials are : 
+superuser credentials are : anupy27 / Splendornet@123
 
 http://localhost:8004 (dev5)
-superuser credentials are : 
+superuser credentials are : anupy27 / Splendornet@123
 
 # iban
 ## Django application to manage (CRUD) users and their bank account data (IBAN).
 
 ### (All below steps are already completed in docker image so no need to follow anything. It is already followed in docker image.) ###
+### But to know working environment [Please check this](https://github.com/anup-splendornet/iban/tree/dev1#following-are-the-steps-to-check-working-environment)
 
 - Require Python 3.x 
 

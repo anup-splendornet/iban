@@ -10,7 +10,10 @@
 
 - To list all available images Run command : `docker images`
     - It will list all the available images of the system. Our imported image details are
-    - be5a177f67c9        latest              7a1253b9d0fb
+
+| REPOSITORY    | TAG           | IMAGE ID     |
+| ------------- |:-------------:| -----:       |
+| be5a177f67c9  | latest        | 7a1253b9d0fb |
 
 - Now run the docker container and connect ports on which docker services are running with ports of host machine using following command.
 - `docker run -i -t -p 8000:8000 -p 8001:8001 -p 8002:8002 -p 8003:8003 -p 8004:8004 be5a177f67c9:latest /bin/bash`

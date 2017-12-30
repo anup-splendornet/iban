@@ -6,9 +6,7 @@
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
-            <link href="{% static 'css/site.css' %}" rel="stylesheet"/>
-            <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-            <script src="{% static 'js/bootstrap.min.js' %}"></script>
+            <link href="{% static 'css/site.css' %}" rel="stylesheet"/>            
         </head>
         <body>
             <nav class="navbar navbar-inverse">
@@ -29,5 +27,10 @@
 
                 {% endblock %}
             </div>
-        </body>
+        </body>        
+        <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/jquery.validate.js' %}"></script>
+        <script src="{% static 'js/script.js' %}"></script>
+
 	</html>

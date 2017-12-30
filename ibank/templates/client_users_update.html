@@ -1,0 +1,73 @@
+{% extends "base.html" %} 
+{% block content %}
+<div class="container">
+        <div class="col col-sm-12 text-center">
+                <div class="col col-sm-12 text-center">
+                    <div class="col col-lg-1"></div>
+                    <div class="col col-lg-10">
+                            <h2 style="margin-left:10px;">Update Client Users</h2>
+                        <div style=" border: 1px solid lightgray; padding: 20px;">
+                            
+                            <form method="post" novalidate="" id="userform">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col col-sm-4">
+                                        <label for="id_first_name">First Name:</label>*
+                                    </div>
+                                    <div class="col col-sm-4">
+                                        <input name="first_name" required="" id="id_first_name" value="{{ ibanuser.first_name}}" type="text">                                        
+                                    </div>
+                                    <div class="col col-sm-4">
+                                    </div>
+                                </div>
+                                    
+                                <div class="row">
+                                    <div class="col col-sm-4">
+                                        <label for="id_last_name">Last Name:</label>*
+                                    </div>
+                                    <div class="col col-sm-4">
+                                        <input name="last_name" required="" id="id_last_name" type="text" value="{{ ibanuser.last_name}}">                                        
+                                    </div>
+                                    <div class="col col-sm-4">
+                                    </div>
+                                </div>
+                                <input type="hidden" value="{{ ibanuser.id }}" name="userid">
+                                <div class="row">
+                                    <div class="col col-sm-4">
+                                        <label for="id_bank_no">Bank No:</label>*
+                                    </div>
+                                    <div class="col col-sm-4">
+                                        <input name="bank_no" required="" id="id_bank_no" value="{{ ibanuser.bank_no}}" type="text">                                        
+                                    </div>
+                                    <div class="col col-sm-4">
+                                    </div>
+                                </div>
+                                    
+                                <div style="padding:12px;">
+                                    <a class="btn btn-default" href="/dashboard">Cancel</a>
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    <div class="col col-lg-1"></div>
+                </div>
+                
+            </div>
+</div>
+<script>
+        $( document ).ready(function() {
+            $('#id_first_name,#id_last_name').keydown(function (e) {
+                if (e.shiftKey || e.ctrlKey || e.altKey) {
+                    e.preventDefault();
+                } else {
+                    var key = e.keyCode;
+                    if (!((key == 8) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
+                        e.preventDefault();
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock content %}

@@ -6,3 +6,8 @@ ul{
 li{
     list-style-type: none;
 }
+
+.error{
+    font-weight: normal;
+    color: #ff0000;
+}

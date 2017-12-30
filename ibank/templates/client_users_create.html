@@ -7,9 +7,8 @@
                     <div class="col col-lg-10">
                             <h2 style="margin-left:10px;">Add Client Users</h2>
                         <div style=" border: 1px solid lightgray; padding: 20px;">
-                            <form method="post" novalidate>
+                            <form method="post" novalidate id="userform">
                                 {% csrf_token %}
-                                
                                 {{ form.non_field_errors }}
                                     {% for field in form.visible_fields %}
                                     <div class="row">

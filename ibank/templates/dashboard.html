@@ -18,13 +18,12 @@
                         <td>{{ bankuser.first_name }}</td>
                         <td>{{ bankuser.last_name }}</td>
                         <td>{{ bankuser.bank_no }}</td>
-                        <td><a href="#" class="btn btn-info">Edit</a></td>
-                        <td><a href="#" class="btn btn-danger">Delete</a></td>
+                        <td><a href="{% url 'clientUsersUpdate' pk=bankuser.id %}" class="btn btn-info">Edit</a></td>
+                        <td><a href="{% url 'clientUsersDelete' pk=bankuser.id %}" class="btn btn-danger">Delete</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-
 </div>
 {% endblock content %}

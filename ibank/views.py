@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from ibanproject.GoogleOAuth.Google import GoogleOAuth
 from django.http import request, HttpResponse, HttpResponseRedirect
 from django.contrib import messages
@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.http import HttpResponse
 from django.views.generic import View, TemplateView
+from django.views.generic import View, UpdateView
 from .models import BankUser
 # Create your views here.
 
@@ -76,3 +77,48 @@ class ClientUserViews(TemplateView):
             "form": form
         }
         return render(request, self.template_name, context)
+
+
+class ClientUserUpdate(TemplateView):
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientUserUpdate, self).get_context_data(**kwargs)
+        try:
+            ibanuser = BankUser.objects.get(pk=self.kwargs['pk'])
+        except:
+            ibanuser = None
+        
+        context['ibanuser'] = ibanuser
+        return context
+
+    def get(self, request, *args, **kwargs):        
+        return render(request, self.template_name, self.get_context_data(**kwargs))
+
+    def post(self, request, *args, **kwargs):        
+        instance = get_object_or_404(BankUser, id=int(request.POST.get('userid')))
+        form = ClientUserDetailForm(request.POST or None, instance=instance)
+        if form.is_valid():
+            instance= form.save(commit=False)
+            instance.save()
+            return redirect('dashboard')
+        context = {
+            "form": form,
+        }
+        return render(request, self.template_name, self.get_context_data(**kwargs))
+
+
+class ClientUserDelete(TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        try:
+            ibanuser = BankUser.objects.get(pk=self.kwargs['pk'])
+        except:
+            ibanuser = None
+        return render(request, self.template_name, {'ibanuser': ibanuser})
+
+    def post(self, request, *args, **kwargs):        
+        instance = get_object_or_404(BankUser, id=int(request.POST.get('userid')))
+        is_deleted = instance.delete()
+        if is_deleted:
+            return redirect('dashboard')
+        return render(request, self.template_name, {})

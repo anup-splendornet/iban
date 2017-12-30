@@ -28,4 +28,6 @@ urlpatterns = [
     url(r'^auth/complete/google-oauth2/$', GoogleAuthViews.get_google_profile_data, name='getgoogleprofiledata'),
     url(r'^dashboard/$', GeneralViews.as_view(), name='dashboard'),
     url(r'^clientUsersCreate/$', ClientUserViews.as_view(template_name='client_users_create.html'), name='clientUsersCreate'),
+    url(r'^clientUsersUpdate/(?P<pk>\d+)/$', ClientUserUpdate.as_view(template_name='client_users_update.html'), name='clientUsersUpdate'),
+    url(r'^clientUsersDelete/(?P<pk>\d+)/$', ClientUserDelete.as_view(template_name='client_users_delete.html'), name='clientUsersDelete'),
 ]

@@ -17,6 +17,10 @@
 
 - **be5a177f67c9** is repository name and latest is tag name.
 
+- Docker imported image [id] may be different one. Please find image id of uploaded image from `docker images` command and use in below command
+
+- `docker run -i -t -p 8000:8000 -p 8001:8001 -p 8002:8002 -p 8003:8003 -p 8004:8004 imageID /bin/bash` [For more clarification]()  
+
 - You will land into the container. Now check postgresql status.  `service postgresql status`
 
 - If it is not running, run it using `service postgresql start`

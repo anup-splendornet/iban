@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %} User {% endblock %}
+
+{% block style %}
+    {{ block.super }}
+{% endblock %}
+
+{% block nav %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        
+        <div class="container">
+            <div class="row userform">                                
+                <div class="col-md-6">
+                    {% if messages %}                        
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}                        
+                    {% else %}
+                        <p>Do you really want to delete '{{ ibaninfo }}' ?</p>
+                        <form action="" method="post">
+                            {% csrf_token %}                        
+                            <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
+                            <input type=submit class="btn btn-danger" value="Delete User" />
+                        </form>
+                    {% endif %}                                
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

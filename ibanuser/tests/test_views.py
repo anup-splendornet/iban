@@ -72,3 +72,17 @@ class IbanUserUpdateViewTestCase(TestCase):
         self.assertTemplateUsed('ibanuser/ibaninfo.html')
         self.assertEqual(IbanInfoForm, response.context['form'].__class__)
         self.assertTrue(response.context['update'])
+
+
+class IbanUserDeleteViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = AutoFixture(User).create(1)[0]
+        self.ibanuser = AutoFixture(IbanInfo, field_values = { 'owner': self.user }).create(1)[0]               
+        self.url = reverse('deleteuser', args = [self.ibanuser.id])
+
+    def test_ibanuser_view_shows_delete_form(self):
+        self.client.force_login(self.user)
+        response = self.client.get(self.url)
+        self.assertTemplateUsed('ibanuser/ibaninfo_confirm_delete.html')
+        self.assertTrue(response.context['delete'])

@@ -17,6 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
+from django.conf.urls import handler404, handler500
 from ibanuser import views
 
 urlpatterns = [
@@ -27,5 +28,9 @@ urlpatterns = [
     url(r'^auth/complete/google-oauth2/$', views.SocialAuthentication.site_authentication, name='googleauthenticate'),
     url(r'^dashboard/', login_required(views.Dashboard.as_view(template_name='ibanuser/dashboard.html')), name='home'),
     url(r'^adduser/$', login_required(views.CreateUser.as_view(template_name='ibanuser/ibaninfo.html')), name='adduser'),
-    url(r'^edituser/(?P<pk>\d+)/$', login_required(views.EditUser.as_view(template_name='ibanuser/ibaninfo.html')), name='edituser'),    
+    url(r'^edituser/(?P<pk>\d+)/$', login_required(views.EditUser.as_view(template_name='ibanuser/ibaninfo.html')), name='edituser'),
+    url(r'^deleteuser/(?P<pk>\d+)/$', login_required(views.DeleteUser.as_view()), name='deleteuser'),
 ]
+
+handler404 = views.Error.as_view()
+handler500 = views.Error.as_view()

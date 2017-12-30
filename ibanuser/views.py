@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, Permission
-from django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import View, TemplateView, CreateView, ListView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth import login
@@ -139,3 +139,31 @@ class EditUser(UpdateView):
             return None
         else:
             return ibanuser
+
+class DeleteUser(DeleteView):
+    # delete functionality
+    model = IbanInfo
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, **kwargs):
+        context = super(DeleteUser, self).get_context_data(**kwargs)
+        context['delete'] = True
+        return context
+
+    # get the ibanuser object for deletion
+    def get_object(self, queryset=None):
+        ibanuser = super(DeleteUser, self).get_object()
+
+        # if the user is not superuser and the loggedin user is not the owner of ibanuser then show error message
+        permission_list = Permission.objects.values_list("codename",flat=True).filter(group__user=self.request.user)
+
+        if  self.request.user != ibanuser.owner or 'delete_ibaninfo' not in permission_list:                        
+            messages.error(self.request, 'You are not authorized to delete this information.')
+            return None
+        else:
+            return ibanuser
+
+class Error(View):
+    # error page functions
+    def get(self, request, *args):
+        return render(request, 'error_all.html', {})

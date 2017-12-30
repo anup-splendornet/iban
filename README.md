@@ -6,6 +6,8 @@
 
 - Docker installation on windows https://docs.docker.com/toolbox/toolbox_install_windows/#step-3-verify-your-installation 
 
+- To donwload Docker image, please use link http://progfeel.co.in/iban/iban.tar
+
 - After installation of docker please ensure docker service is running. Once it is confirmed, import image into it `docker load < iban.tar`
 
 - To list all available images Run command : `docker images`
@@ -22,7 +24,7 @@
 
 - Docker imported image [id] may be different one. Please find image id of uploaded image from `docker images` command and use in below command
 
-- `docker run -i -t -p 8000:8000 -p 8001:8001 -p 8002:8002 -p 8003:8003 -p 8004:8004 imageID /bin/bash` [For more clarification]()  
+- `docker run -i -t -p 8000:8000 -p 8001:8001 -p 8002:8002 -p 8003:8003 -p 8004:8004 imageID /bin/bash` [For more clarification](http://progfeel.co.in/iban/imageidclarification.png)  
 
 - You will land into the container. Now check postgresql status.  `service postgresql status`
 

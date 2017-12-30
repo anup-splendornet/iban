@@ -1,0 +1,40 @@
+{% extends "base.html" %} 
+{% block content %}
+<div class="container">
+        <div class="col col-sm-12 text-center">
+                <div class="col col-sm-12 text-center">
+                    <div class="col col-lg-1"></div>
+                    <div class="col col-lg-10">
+                            <h2 style="margin-left:10px;">Add Client Users</h2>
+                        <div style=" border: 1px solid lightgray; padding: 20px;">
+                            <form method="post" novalidate>
+                                {% csrf_token %}
+                                
+                                {{ form.non_field_errors }}
+                                    {% for field in form.visible_fields %}
+                                    <div class="row">
+                                        <div class="col col-sm-4">
+                                            {{ field.label_tag }}
+                                        </div>
+                                        <div class="col col-sm-4">
+                                            {{ field }}
+                                            {{ field.errors }}
+                                            {{ field.help_text }}
+                                        </div>
+                                        <div class="col col-sm-4">
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                <div style="padding:12px;">
+                                    <a class="btn btn-default" href="/dashboard">Cancel</a>
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col col-lg-1"></div>
+                </div>
+                
+            </div>
+</div>
+{% endblock content %}

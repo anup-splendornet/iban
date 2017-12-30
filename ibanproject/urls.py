@@ -24,7 +24,8 @@ urlpatterns = [
     url(r'^login/$', views.login, kwargs={'redirect_authenticated_user': True}, name='login'),
     url(r'^logout/$', views.logout,{'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     url(r'^$', views.login, name='login'),
-    url(r'^dashboard/$', GeneralViews.dashboard, name='dashboard'),
     url(r'^getgoogletoken/$', GoogleAuthViews.get_google_token, name='getgoogletoken'),
     url(r'^auth/complete/google-oauth2/$', GoogleAuthViews.get_google_profile_data, name='getgoogleprofiledata')
+    url(r'^dashboard/$', GeneralViews.as_view(), name='dashboard'),
+    url(r'^clientUsersCreate/$', ClientUserViews.as_view(template_name='client_users_create.html'), name='clientUsersCreate'),
 ]

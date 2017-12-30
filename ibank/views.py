@@ -1,10 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from ibanproject.GoogleOAuth.Google import GoogleOAuth
 from django.http import request, HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from ibanproject import settings
+from ibanproject import settings
+from .forms import ClientUserDetailForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login
+from django.http import HttpResponse
+from django.views.generic import View, TemplateView
+from .models import BankUser
 # Create your views here.
 
 class GoogleAuthViews():
@@ -46,6 +51,28 @@ class GoogleAuthViews():
                 return HttpResponseRedirect(settings.LOGIN_URL)
         return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
 
-class GeneralViews():
-    def dashboard(request):
-        return render(request,"dashboard.html")
+class GeneralViews(View):
+    def get(self, request, *args):
+        try:
+            bankusers = BankUser.objects.filter(created_by=request.user)
+        except:
+            bankusers = None
+        return render(request, "dashboard.html", {'bankusers': bankusers})
+
+class ClientUserViews(TemplateView):
+    def get(self, request, *args):
+        form = ClientUserDetailForm()
+        return render(request, self.template_name, {'form':form})
+
+    def post(self, request, *args):
+        form = ClientUserDetailForm(request.POST or None)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.created_by = request.user
+            instance.save()
+
+            return redirect('dashboard')
+        context = {
+            "form": form
+        }
+        return render(request, self.template_name, context)

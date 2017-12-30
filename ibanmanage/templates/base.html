@@ -35,6 +35,29 @@
 
                 {% endblock %}
             </div>
+            <div class="modal fade" id="modalconfirmdelete" tabindex="-1" role="dialog" aria-labelledby="modalconfirmdeleteLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">  </h4>
+                        </div>
+                        <div class="modal-body"> {% csrf_token %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% block bootstrap_admin_js %}
+                <script>
+                $(document).ready(function(){
+                    $("#modalconfirmdelete").on("show.bs.modal", function(e) {
+                        var link = $(e.relatedTarget);
+                        $(this).find(".modal-body").load(link.attr("href"));
+                    });
+                });
+                </script>
+            {% endblock bootstrap_admin_js %}
             {{form.media}}
         </body>
 	</html>

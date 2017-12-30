@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row">
+        <div class="col col-sm-12">
+            <label>Are you sure you want to delete?</label>
+        </div>
+        <div class="col col-sm-12">
+            <form action="/deleteibandata/{{object.pk}}/" method="post">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-danger" value="Delete" name="delete" />
+                <a href="/dashboard/" class="btn btn-default">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

@@ -166,3 +166,72 @@ class IbanUpdateViewTestCase(TestCase):
 
         updateseconduser2 = self.client.post('/editibandata/2/', {'first_name':"fname", 'last_name': "lname", 'iban':"EE38 2200 2210 2014 5685","created_by":self.user2})
         self.assertContains(updateseconduser2,"Forbidden - Error 403")
+
+
+class IbanDeleteViewTestCase(TestCase):
+
+    def setUp(self):
+        self.username = 'firstuser'
+        self.password = 'firstuserpwd'
+        self.user = User.objects.create_user(username=self.username, password=self.password, email='test1@yopmail.com', is_active=True)
+
+        self.username2 = 'seconduser'
+        self.password2 = 'seconduserpwd'
+        self.user2 = User.objects.create_user(username=self.username2, password=self.password2, email='test2@yopmail.com', is_active=True)
+
+
+    def test_delete_iban_user(self):
+    
+        all_permissions = Permission.objects.filter(content_type__app_label='ibanmanage', content_type__model='ibandata')
+        #create group
+        group = Group.objects.create(name='Ibanadmin')
+        # assign permissions
+        for permission in all_permissions:
+            group.permissions.add(permission)
+
+        self.user.groups.add(group)
+
+        ibanUser1 = Ibandata.objects.create(first_name='fname', last_name='lname', iban='AL47 2121 1009 0000 0002 3569 8741',created_by=self.user)
+        
+        login = self.client.login(username=self.username, password=self.password)
+        deleteuser = self.client.get('/deleteibandata/1/')
+
+        self.assertContains(deleteuser,"Are you sure you want to delete")
+
+    def test_delete_ibanuser_owner(self):
+        all_permissions = Permission.objects.filter(content_type__app_label='ibanmanage', content_type__model='ibandata')
+        #create group
+        group = Group.objects.create(name='Ibanadmin')
+        # assign permissions
+        for permission in all_permissions:
+            group.permissions.add(permission)
+
+        self.user.groups.add(group)
+        self.user2.groups.add(group)
+
+        ibanUser1 = Ibandata.objects.create(first_name='fname', last_name='lname', iban='AL47 2121 1009 0000 0002 3569 8741',created_by=self.user)
+        ibanUser2 = Ibandata.objects.create(first_name='fname', last_name='lname', iban='AD12 0001 2030 2003 5910 0100',created_by=self.user)
+        ibanUser3 = Ibandata.objects.create(first_name='fname', last_name='lname', iban='AT61 1904 3002 3457 3201',created_by=self.user2)
+
+        login = self.client.login(username=self.username, password=self.password)
+
+        updateseconduser = self.client.get('/deleteibandata/3/')
+        self.assertContains(updateseconduser,"Forbidden - Error 403")
+
+    def test_delete_ibanuser_notexist(self):
+        all_permissions = Permission.objects.filter(content_type__app_label='ibanmanage', content_type__model='ibandata')
+        #create group
+        group = Group.objects.create(name='Ibanadmin')
+        # assign permissions
+        for permission in all_permissions:
+            group.permissions.add(permission)
+
+        self.user.groups.add(group)
+        
+        ibanUser1 = Ibandata.objects.create(first_name='fname', last_name='lname', iban='AL47 2121 1009 0000 0002 3569 8741',created_by=self.user)
+        ibanUser2 = Ibandata.objects.create(first_name='fname', last_name='lname', iban='AD12 0001 2030 2003 5910 0100',created_by=self.user)
+        
+        login = self.client.login(username=self.username, password=self.password)
+
+        updateseconduser = self.client.get('/deleteibandata/3/')
+        self.assertContains(updateseconduser,"Page Not Found")

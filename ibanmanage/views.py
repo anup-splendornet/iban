@@ -10,7 +10,7 @@ from .common import *
 from ibanmanage.models import *
 from django.contrib.auth import login
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from ibanmanage import forms
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
@@ -150,6 +150,30 @@ class IbandataEdit(UpdateView):
             raise PermissionDenied()
         return user
 
+class IbandataDelete(DeleteView):
+    """Delete IBAN Users
+
+    Delete view for IBAN users
+    """
+    model = Ibandata
+    template_name = 'ibanmanage/ibandata_confirm_delete.html'
+    success_url = reverse_lazy('dashboard')
+    success_message = "Data Deleted Successfuly."
+
+    @method_decorator(login_required(login_url=settings.LOGIN_URL))
+    @method_decorator(permission_required("delete_ibandata"))
+    def dispatch(self, *args, **kwargs):
+        return super(IbandataDelete, self).dispatch(*args, **kwargs)
+
+    def post(self, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(IbandataDelete, self).post(*args, **kwargs)
+
+    def get_object(self, queryset=None):
+        obj = super(IbandataDelete, self).get_object()
+        if not obj.created_by == self.request.user:
+            raise PermissionDenied()
+        return obj
 
 @login_required(login_url=settings.LOGIN_URL)
 def ibanunique(request):

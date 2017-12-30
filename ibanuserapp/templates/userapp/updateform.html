@@ -5,7 +5,7 @@
 {% block content %}
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">IBAN Users</a></li>
-    <li class="breadcrumb-item active">Add User</li>    
+    <li class="breadcrumb-item active">Update User:{{ ibanuser.first_name }}</li>    
 </ol>
 <div class="col-md-12">    
         <form method="post" id="userForm">
@@ -13,25 +13,26 @@
             <div class="col-md-12">
                 <div class="col-md-6">                    
                     <label for="first_name">First Name</label>
-                    <input type="text" name="first_name" autofocus="true" maxlength="80" required="true" id="id_first_name" class="form-control" placeholder="Enter First Name">
-                    {{ ibanuser.first_name.errors }}            
+                    <input type="text" name="first_name" value="{{ ibanuser.first_name }}" maxlength="80" required="true" id="id_first_name" class="form-control" placeholder="Enter First Name">
+                    {{ ibanuser.first_name.errors }}
                 </div>
                 <div class="col-md-6">                    
                     <label for="last_name">Last Name</label>
-                    <input type="text" name="last_name" autofocus="true" maxlength="80" required="true" id="id_last_name" class="form-control" placeholder="Enter Last Name">
-                    {{ ibanuser.last_name.errors }}            
+                    <input type="text" name="last_name" value="{{ ibanuser.last_name }}" maxlength="80" required="true" id="id_last_name" class="form-control" placeholder="Enter Last Name">
+                    {{ ibanuser.last_name.errors }}
                 </div>
+                <input type="hidden" name="userid" value="{{ ibanuser.id }}">
             </div>
             <div class="col-md-12">
                 <div class="col-md-6">                    
                     <label for="iban">IBAN</label>
-                    <input type="text" name="iban_num" autofocus="true" maxlength="100" required="true" id="id_iban" class="form-control" placeholder="Enter IBAN">
-                    {{ ibanuser.iban_num.errors }}                                
+                    <input type="text" name="iban_num" maxlength="100" value="{{ ibanuser.iban_num }}" required="true" id="id_iban" class="form-control" placeholder="Enter IBAN">
+                    {{ ibanuser.iban_num.errors }}
                 </div>
             </div>    
             <div class="form-group pull-right">
-                    <a class="btn btn-primary btn-sm" href="{% url 'home' %}">Cancel</a>
-                <input class="btn btn-success btn-sm" type="submit" value="Create" />
+                <a class="btn btn-primary btn-sm" href="{% url 'home' %}">Cancel</a>
+                <input class="btn btn-success btn-sm" type="submit" value="Update" />
             </div>
         </form>
         

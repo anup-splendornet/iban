@@ -76,8 +76,11 @@ WSGI_APPLICATION = 'ibanproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',        
-        'NAME': 'iban_user_data',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ibandev4',
+        'USER': 'postgres',
+        'PASSWORD': 'uzVAmbotFU',
+        'HOST': 'localhost',
     }
 }
 

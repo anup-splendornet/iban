@@ -26,4 +26,6 @@ urlpatterns = [
     url(r'^auth/complete/google-oauth2/$', views.GoogleAuth.auth, name='usergoogleauthresponse'), 
     url(r'^dashboard/', views.Home.as_view(), name='home'),
     url(r'^add/', views.Create.as_view(), name='add'),
+    url(r'^update/(?P<pk>\d+)/$', views.Update.as_view(), name='update'),
+    url(r'^delete/(?P<pk>\d+)/$', views.Delete.as_view(), name='delete'),    
 ]

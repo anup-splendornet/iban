@@ -1,14 +1,13 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from ibanproject import settings
 from django.http import HttpResponseRedirect
 from ibanproject.GoogleOAuth.Google import GoogleOAuth
 from django.contrib.auth.models import User
 from django.contrib.auth import login
-from django.views.generic import View
+from django.views.generic import View, TemplateView
 from django.contrib import messages
 from .models import IbanUserInfo
 from .forms import IbanUserInfoForm
-
 # Create your views here.
 class GoogleAuth:	
     def authenticate_user(request, google_profile):
@@ -90,3 +89,54 @@ class Create(View):
             instance.save()
             messages.success(request, 'IBAN User Created Successfully.')
         return render(request, 'userapp/form.html', {'ibanuser': ibanuser})
+
+class Update(TemplateView):
+
+    def get_context_data(self, **kwargs):
+        context = super(Update, self).get_context_data(**kwargs)
+        try:
+            ibanuser = IbanUserInfo.objects.get(pk=self.kwargs['pk'])
+        except:
+            ibanuser = None
+        
+        context['ibanuser'] = ibanuser
+
+        return context
+
+    def get(self, request, *args, **kwargs):
+        try:
+            ibanuser = IbanUserInfo.objects.get(pk=self.kwargs['pk'])
+        except:
+            ibanuser = None
+
+        return render(request, 'userapp/updateform.html', self.get_context_data(**kwargs))
+
+    def post(self, request, *args, **kwargs):        
+        instance = get_object_or_404(IbanUserInfo, id=int(request.POST.get('userid')))
+        form = IbanUserInfoForm(request.POST or None, instance=instance)
+        if form.is_valid():
+            instance= form.save(commit=False)
+            instance.save()
+            return redirect('home')
+        context = {    
+            "form": form,
+        }
+        return render(request, 'userapp/updateform.html', self.get_context_data(**kwargs))
+
+
+
+class Delete(View):
+
+    def get(self, request, *args, **kwargs):
+        try:
+            ibanuser = IbanUserInfo.objects.get(pk=self.kwargs['pk'])
+        except:
+            ibanuser = None
+        return render(request, 'userapp/deleteform.html', {'ibanuser': ibanuser})
+
+    def post(self, request, *args, **kwargs):        
+        instance = get_object_or_404(IbanUserInfo, id=int(request.POST.get('userid')))
+        is_deleted = instance.delete()
+        if is_deleted:
+            return redirect('home')        
+        return render(request, 'userapp/deleteform.html', context)       

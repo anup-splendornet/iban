@@ -5,9 +5,6 @@ from ibanmanagment.forms import IbanDetailsForm
 # Create your tests here.
 class IbanFormTestCase(TestCase):
 
-    def setUp(self):
-        pass
-
     def test_form_success(self):
         """
             To check Form is valid or not.
